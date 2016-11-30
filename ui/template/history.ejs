@@ -1,0 +1,12 @@
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" is-open="status.open" ng-repeat="message in history | orderBy: sortDate">
+        <uib-accordion-heading>
+            {{message.date | date: dd.MM.yyyy}}
+            <i style="padding-left: 10px">{{message.sender}}</i>
+            <i class="fa fa-envelope-o" style="margin-left: 10px; margin-right: 10px"></i>
+            <i>{{message.addressee}}</i>
+            <i class="pull-right fa" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i>
+        </uib-accordion-heading>
+        {{message.text}}
+    </div>
+</uib-accordion>

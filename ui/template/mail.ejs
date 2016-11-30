@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru" ng-app="app">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>Почтовый ящик</title>
+
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.css">
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="/js/app.module.js"></script>
+    <script src="/js/route-config.js"></script>
+    <script src="/js/total.controller.js"></script>
+    <script src="/js/message.controller.js"></script>
+    <script src="/js/unreadMessage.controller.js"></script>
+    <script src="/js/sentMessage.controller.js"></script>
+    <script src="/js/history.controller.js"></script>
+    <script src="/js/newMessage.controller.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/mail">Почтовый ящик</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form action="/logout" method="post" id="logout"></form>
+                        <a href="" onclick="document.getElementById('logout').submit(); return false;">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="/messages/new">Написать сообщение</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li><a href="/mail">Входящие</a></li>
+                    <li><a href="/messages/unread">Непрочитанные</a></li>
+                    <li><a href="/messages/sent">Отправленные</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main">
+                <ng-view></ng-view>
+            </div>
+            <div class="col-md-2" ng-controller="TotalController">
+                <h5 class="text-center"><i class="glyphicon glyphicon-search"></i> <i class="glyphicon glyphicon-user"></i></h5>
+                <input type="text" class="form-control" placeholder="Поиск..." ng-model="query">
+                <br>
+                <div class="list-group">
+                    <div ng-repeat="user in users | orderBy: sortParam | filter: query">
+                        <a href="" class="list-group-item"  title="Написать" data-toggle="modal" data-target="#{{user.username}}">{{user.username}}</a>
+
+                        <div class="modal fade" id="{{user.username}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form ng-submit="sendMessage()" role="form">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Сообщение пользователю {{user.username}}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <textarea class="form-control" ng-model="text" style="resize: none" rows="10"></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit"  class="btn btn-primary">Отправить</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

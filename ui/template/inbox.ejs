@@ -1,0 +1,29 @@
+<h1 class="page-header">Входящие</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Отправитель</th>
+            <th>Текст сообщения</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="message in messages | orderBy : sortDate">
+            <td>
+                <form ng-submit="readMessage()">
+                    <button class="btn btn-default" type="submit">
+                        <i ng-show="message.status == 'read'" class="fa fa-envelope-open-o" title="Прочитать сообщение"></i>
+                        <i ng-show="message.status == 'unread'" class="fa fa-envelope" title="Прочитать новое сообщение"></i>
+                    </button>
+                </form>
+            </td>
+            <td>{{message.sender}}</td>
+            <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">{{message.text}}</td>
+            <td>{{message.date | date: dd.MM.yyyy}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
