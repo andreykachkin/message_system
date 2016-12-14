@@ -6,26 +6,29 @@
     <title>Вход на сайт</title>
 
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="/img/favicon.png">
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/js/auth.controller.js"></script>
 
 </head>
-<body>
+<body ng-controller="AuthenticationController">
     <div class="container" style="padding-top: 200px">
         <div class="row">
-            <form id="checkAuth" class="form-horizontal" role="form">
+            <form ng-submit="checkAuth()" class="form-horizontal" role="form">
                 <h2 class="text-center">Вход на сайт</h2>
                 <div class="form-group">
                     <label class="col-md-5 control-label">Логин</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" required name="username" placeholder="Логин">
+                        <input type="text" class="form-control" required ng-model="username" placeholder="Логин">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-5 control-label">Пароль</label>
                     <div class="col-md-3">
-                        <input type="password" class="form-control" required name="password" placeholder="Пароль">
+                        <input type="password" class="form-control" required ng-model="password" placeholder="Пароль">
                     </div>
                 </div>
                 <div class="form-group" style="margin-bottom: 0px">
@@ -42,26 +45,5 @@
             </form>
         </div>
     </div>
-    <script>
-        $('#checkAuth').submit(function(event) {
-            event.preventDefault();
-            var str = $(this).serialize();
-            $.ajax({
-                        type: "POST",
-                        url: "/authentication",
-                        data: str,
-                        statusCode: {
-                            200: function() {
-                                window.location = "/mail";
-                            },
-                            401: function(){
-                                $('#error').empty();
-                                $('#error').append('<p class="text-danger">Неправильный логин или пароль</p>');
-                            }
-                        }
-                    }
-            );
-        });
-    </script>
 </body>
 </html>

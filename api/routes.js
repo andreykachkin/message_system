@@ -2,11 +2,12 @@ var bodyParser = require('body-parser');
 var config = require('./configBD');
 var User = require('./models/user').User;
 var Message = require('./models/message').Message;
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var jsonParser = bodyParser.json();
 
 module.exports = function (app) {
-    app.post('/registration', urlencodedParser, function(req, res, next){
+    app.use(require('./loadUser'));
+
+    app.post('/registration', jsonParser, function(req, res, next){
         var username = req.body.username.toLowerCase();
         var password = req.body.password;
 
@@ -25,7 +26,7 @@ module.exports = function (app) {
         })
     });
 
-    app.post('/authentication', urlencodedParser, function(req, res, next){
+    app.post('/authentication', jsonParser, function(req, res, next){
         var username = req.body.username;
         var password = req.body.password;
 

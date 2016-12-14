@@ -1,2 +1,2 @@
 angular
-    .module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+    .module('app', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ui.select2']);

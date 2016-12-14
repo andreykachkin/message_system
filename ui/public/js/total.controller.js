@@ -42,6 +42,5 @@ function TotalController($scope, $http, $route, $location) {
 
         })
     };
-
 }
 

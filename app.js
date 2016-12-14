@@ -11,7 +11,6 @@ mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
 
 var app = express();
 
-//app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'ui/template'));
 app.set('view engine', 'ejs');
 
