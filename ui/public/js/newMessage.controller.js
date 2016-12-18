@@ -2,14 +2,13 @@ angular
     .module('app')
     .controller('NewMessageController', NewMessageController);
 
-NewMessageController.$inject = ['$scope', '$http', '$route'];
+NewMessageController.$inject = ['$scope', 'FirstLevelFactory', '$route'];
 
-function NewMessageController($scope, $http, $route) {
-    $http.get('/users').success(function(data){
+function NewMessageController($scope, FirstLevelFactory, $route) {
+
+    FirstLevelFactory.query({url: 'users'}, function(data){
         $scope.sortParam = 'username';
         $scope.users = data;
-    }).error(function(){
-
     });
 
     $scope.sendNewMessage = function(){
@@ -17,10 +16,8 @@ function NewMessageController($scope, $http, $route) {
             addressee : this.addressee,
             text: this.text
         };
-        $http.post('/sendMessage', data).success(function() {
+        FirstLevelFactory.save({url: 'sendMessage'}, data, function() {
             $route.reload();
-        }).error(function() {
-
         })
     };
 }

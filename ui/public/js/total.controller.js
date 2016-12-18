@@ -2,17 +2,16 @@ angular
     .module('app')
     .controller('TotalController', TotalController);
 
-TotalController.$inject = ['$scope', '$http', '$route', '$location'];
+TotalController.$inject = ['$scope', '$route', '$location', 'FirstLevelFactory'];
 
-function TotalController($scope, $http, $route, $location) {
-    $http.get('/users').success(function(data){
+function TotalController($scope, $route, $location, FirstLevelFactory) {
+
+    FirstLevelFactory.query({url: 'users'}, function(data){
         $scope.sortParam = 'username';
         $scope.users = data;
-    }).error(function(){
-
     });
 
-    $http.get('/inboxMessage').success(function(data){
+    FirstLevelFactory.query({url: 'inboxMessage'}, function (data) {
         $scope.sortDate = '-date';
         $scope.messages = data;
     });
@@ -22,25 +21,23 @@ function TotalController($scope, $http, $route, $location) {
             addressee : this.user.username,
             text : this.text
         };
-        $http.post('/sendMessage', data).success(function() {
+
+        FirstLevelFactory.save({url: 'sendMessage'}, data, function() {
             var modal = angular.element(document.querySelector('.modal.fade.in'));
             modal.modal('hide');
             $route.reload();
-        }).error(function() {
-
-        })
+        });
     };
 
     $scope.readMessage = function(){
         var data = {
             _id : this.message._id
         };
-        $http.post('/readMessage', data).success(function() {
+
+        FirstLevelFactory.save({url: 'readMessage'}, data, function() {
             $location.path('/messages/' + data._id);
             $route.reload();
-        }).error(function() {
-
-        })
+        });
     };
 }
 

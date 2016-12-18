@@ -1,6 +1,6 @@
 <h1 class="page-header">Непрочитанные</h1>
 <div class="table-responsive">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" ng-show="MessagesLength !== 0">
         <thead>
         <tr>
             <th></th>
@@ -24,5 +24,5 @@
         </tr>
         </tbody>
     </table>
-    <p class="text-center" id="noMessages"></p>
+    <p class="text-center" ng-show="MessagesLength == 0">Нет новых сообщений</p>
 </div>

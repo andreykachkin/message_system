@@ -10,7 +10,9 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
     <script src="/js/reg.controller.js"></script>
+    <script src="/js/firstLevel.factory.js"></script>
 
 </head>
 <body ng-controller="RegistrationController">
@@ -32,7 +34,9 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 0px">
                     <div class="col-md-5"></div>
-                    <div class="col-md-3" id="error"></div>
+                    <div class="col-md-3" >
+                        <p class="text-danger" ng-show="error">Пользователь с таким именем уже существует.</p>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-5 col-md-2">
