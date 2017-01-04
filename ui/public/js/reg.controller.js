@@ -1,17 +1,17 @@
 angular
-    .module('app', ['ngResource'])
+    .module('app')
     .controller('RegistrationController', RegistrationController);
 
-RegistrationController.$inject = ['$scope','FirstLevelFactory', '$window'];
+RegistrationController.$inject = ['$scope','RegistrationFactory', '$window'];
 
-function RegistrationController($scope, FirstLevelFactory, $window) {
+function RegistrationController($scope, RegistrationFactory, $window) {
 
     $scope.reg = function () {
         var data = {
             username : this.username,
             password : this.password
         };
-        FirstLevelFactory.save({url: 'registration'}, data, function() {
+        RegistrationFactory.save({}, data, function() {
             $window.location.href = '/mail';
         }, function(){
             $scope.error = true;

@@ -2,16 +2,14 @@ angular
     .module('app')
     .controller('MessageController', MessageController);
 
-MessageController.$inject = ['$scope', '$routeParams', '$route', 'SecondLevelFactory', 'FirstLevelFactory'];
+MessageController.$inject = ['$scope', '$routeParams', '$route', 'MessageFactory'];
 
-function MessageController($scope, $routeParams, $route, SecondLevelFactory, FirstLevelFactory) {
-    $scope._id = $routeParams._id;
-
+function MessageController($scope, $routeParams, $route, MessageFactory) {
     var sessionUser;
 
-    SecondLevelFactory.query({firstUrl: 'message', secondUrl: $routeParams._id}, function(data) {
-        $scope.message = data[0];
-        sessionUser = data[1];
+    MessageFactory.query({message_id: $routeParams._id}, function(message) {
+        $scope.message = message[0];
+        sessionUser = message[1];
     });
 
     $scope.sendMessage = function(){
@@ -23,7 +21,7 @@ function MessageController($scope, $routeParams, $route, SecondLevelFactory, Fir
         } else {
             data.addressee = this.message.sender
         }
-        FirstLevelFactory.save({url: 'sendMessage'}, data, function() {
+        MessageFactory.save({}, data, function() {
             $route.reload();
         });
     };

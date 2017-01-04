@@ -51,16 +51,7 @@ module.exports = function (app) {
         res.redirect('/');
     });
 
-    app.post('/readMessage', jsonParser, function(req, res, next){
-        var _id = req.body._id;
-
-        Message.findOneAndUpdate({_id : _id}, {status: 'read'}, function(err){
-            if (err) return next(err);
-            res.sendStatus(200);
-        });
-    });
-
-    app.post('/sendMessage', jsonParser, function(req, res, next) {
+    app.post('/messages', jsonParser, function(req, res, next) {
         var sender = req.session.user;
         var addresseeArr = req.body.addressee;
         var text = req.body.text;
@@ -96,32 +87,65 @@ module.exports = function (app) {
         }
     });
 
-    app.get('/inboxMessage', function (req, res, next) {
-        Message.find({addressee: req.session.user}, function (err, messages) {
-            if(err) return next(err);
-            res.send(messages);
-        });
+    app.get('/messages', function (req, res, next) {
+
+        switch(req.query.folder) {
+
+            case 'inbox':
+                Message.find({addressee: req.session.user}, function (err, messages) {
+                    if (err) return next (err);
+                    res.send(messages);
+                });
+                break;
+
+            case 'unread':
+                Message.find({addressee: req.session.user, status: 'unread'}, function (err, messages) {
+                    if (err) return next(err);
+                    res.send(messages);
+                });
+                break;
+
+            case 'sent':
+                Message.find({sender: req.session.user}, function (err, messages) {
+                    if (err) return next(err);
+                    res.send(messages);
+                });
+                break;
+
+            case 'history':
+                var UserOne = req.query.users.split('&')[0];
+                var UserTwo = req.query.users.split('&')[1];
+
+                if (UserOne == UserTwo) {
+                    Message.find({sender: UserOne, addressee: UserOne}, function (err, messagesArrTwo) {
+                        if (err) return next(err);
+                        res.send(messagesArrTwo);
+                    });
+                } else {
+                    Message.find({sender: UserTwo, addressee: UserOne}, function (err, messagesArrTwo) {
+                        if (err) return next(err);
+                        Message.find({sender: UserOne, addressee: UserTwo}, function (err, messagesArrOne) {
+                            if (err) return next(err);
+                            res.send(messagesArrOne.concat(messagesArrTwo));
+                        });
+                    });
+                }
+                break;
+        }
     });
 
-    app.get('/unreadMessage', function (req, res, next) {
-        Message.find({addressee: req.session.user, status: 'unread'}, function (err, messages) {
+    app.get('/messages/:_id', function (req, res, next) {
+        var _id = req.params._id;
+        Message.findById(_id, function(err, message) {
             if (err) return next(err);
-            res.send(messages);
+            if (message.addressee == req.session.user) {
+                Message.findByIdAndUpdate(_id, {status: 'read'}, {new: true}, function (err, message) {
+                    res.send([message, req.session.user]);
+                });
+            } else {
+                res.send([message, req.session.user]);
+            }
         });
-    });
-
-    app.get('/sentMessage', function (req, res, next) {
-       Message.find({sender: req.session.user}, function (err, messages) {
-            if (err) return next(err);
-           res.send(messages);
-        });
-    });
-
-    app.get('/message/:_id', function (req, res, next) {
-        Message.find({_id: req.params._id}, function (err, message) {
-            if (err) return next(err);
-            res.send(message.concat(req.session.user));
-        })
     });
 
     app.get('/users', function (req, res, next) {
@@ -131,32 +155,8 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/history/:users', function (req, res, next) {
-        var UserOne = req.params.users.split('+')[0];
-        var UserTwo = req.params.users.split('+')[1];
-
-        if (UserOne == UserTwo) {
-            Message.find({sender: UserOne, addressee: UserOne}, function (err, messagesArrTwo) {
-                if (err) return next(err);
-                res.send(messagesArrTwo);
-            });
-        } else {
-            Message.find({sender: UserTwo, addressee: UserOne}, function (err, messagesArrTwo) {
-                if (err) return next(err);
-                Message.find({sender: UserOne, addressee: UserTwo}, function (err, messagesArrOne) {
-                    if (err) return next(err);
-                    res.send(messagesArrOne.concat(messagesArrTwo));
-                });
-            });
-        }
-    });
-
-    app.get('/messages/:messageType', function(req, res) {
+    app.get('/template/:messageType', function(req, res) {
         res.render(req.params.messageType);
-    });
-
-    app.get('/registration', function(req, res) {
-        res.render('registration');
     });
 
     app.get('/mail', function(req, res) {

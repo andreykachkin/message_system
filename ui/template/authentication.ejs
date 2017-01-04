@@ -1,11 +1,11 @@
 <div class="container" style="padding-top: 200px">
     <div class="row">
-        <form class="form-horizontal" ng-submit="reg()" role="form">
-            <h2 class="text-center">Регистрация</h2>
+        <form ng-submit="checkAuth()" class="form-horizontal" role="form">
+            <h2 class="text-center">Вход на сайт</h2>
             <div class="form-group">
                 <label class="col-md-5 control-label">Логин</label>
                 <div class="col-md-3">
-                    <input type="text" class="form-control" ng-model="username" required placeholder="Логин">
+                    <input type="text" class="form-control" required ng-model="username" placeholder="Логин">
                 </div>
             </div>
             <div class="form-group">
@@ -16,13 +16,15 @@
             </div>
             <div class="form-group" style="margin-bottom: 0px">
                 <div class="col-md-5"></div>
-                <div class="col-md-3" >
-                    <p class="text-danger" ng-show="error">Пользователь с таким именем уже существует.</p>
+                <div class="col-md-3">
+                    <p class="text-danger" ng-show="error">Неправильный логин или пароль</p>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-md-offset-5 col-md-2">
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                <div class="col-md-offset-5 col-md-3 row">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                    или
+                    <a href="/registration" class="btn btn-primary">Зарегистрироваться</a>
                 </div>
             </div>
         </form>

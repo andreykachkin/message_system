@@ -5,8 +5,8 @@
     <p>{{message.text}}</p>
 
     <button class="btn btn-default" ng-click="answer = !answer" style="margin-right: 15px">Ответить</button>
-    <a href="/messages/history/{{message.sender}}+{{message.addressee}}" class="btn btn-default">
-        <i class="fa fa-users"> </i>
+    <a href="/history/{{message.sender}}&{{message.addressee}}" class="btn btn-default">
+        <i class="fa fa-users"></i>
         Показать историю переписки
     </a>
 

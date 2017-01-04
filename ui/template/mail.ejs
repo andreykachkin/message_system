@@ -22,14 +22,14 @@
         <script src="/bower_components/angular-ui-select2/src/select2.js"></script>
         <script src="/js/app.module.js"></script>
         <script src="/js/route-config.js"></script>
-        <script src="/js/firstLevel.factory.js"></script>
-        <script src="/js/secondLevel.factory.js"></script>
         <script src="/js/total.controller.js"></script>
         <script src="/js/message.controller.js"></script>
         <script src="/js/unreadMessage.controller.js"></script>
         <script src="/js/sentMessage.controller.js"></script>
         <script src="/js/history.controller.js"></script>
         <script src="/js/newMessage.controller.js"></script>
+        <script src="/js/user.factory.js"></script>
+        <script src="/js/message.factory.js"></script>
 
     </head>
 
@@ -63,13 +63,13 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li>
-                            <a href="/messages/new">Написать сообщение</a>
+                            <a href="/new">Написать сообщение</a>
                         </li>
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li><a href="/mail">Входящие</a></li>
-                        <li><a href="/messages/unread">Непрочитанные</a></li>
-                        <li><a href="/messages/sent">Отправленные</a></li>
+                        <li><a href="/unread">Непрочитанные</a></li>
+                        <li><a href="/sent">Отправленные</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-7 col-sm-offset-3 col-md-8 col-md-offset-2 main">
@@ -116,8 +116,8 @@
         <p>Вы не авторизованы</p>
         <p>Войдите или зарегистрируйтесь</p>
         <div class="row">
-            <a href="/template/login" class="btn btn-primary"><i class="fa fa-sign-in"></i> Вход на сайт</a>
-            <a href="/template/registration" class="btn btn-primary"><i class="fa fa-user-plus"></i> Регистрация</a>
+            <a href="/" class="btn btn-primary"><i class="fa fa-sign-in"></i> Вход на сайт</a>
+            <a href="/registration" class="btn btn-primary"><i class="fa fa-user-plus"></i> Регистрация</a>
         </div>
     </div>
 

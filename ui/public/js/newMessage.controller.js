@@ -2,21 +2,21 @@ angular
     .module('app')
     .controller('NewMessageController', NewMessageController);
 
-NewMessageController.$inject = ['$scope', 'FirstLevelFactory', '$route'];
+NewMessageController.$inject = ['$scope', '$route', 'UserFactory', 'MessageFactory'];
 
-function NewMessageController($scope, FirstLevelFactory, $route) {
+function NewMessageController($scope, $route, UserFactory, MessageFactory) {
 
-    FirstLevelFactory.query({url: 'users'}, function(data){
+    UserFactory.query({}, function(users){
         $scope.sortParam = 'username';
-        $scope.users = data;
+        $scope.users = users;
     });
 
-    $scope.sendNewMessage = function(){
+    $scope.sendMessage = function(){
         var data = {
             addressee : this.addressee,
             text: this.text
         };
-        FirstLevelFactory.save({url: 'sendMessage'}, data, function() {
+        MessageFactory.save({}, data, function() {
             $route.reload();
         })
     };

@@ -2,24 +2,13 @@ angular
     .module('app')
     .controller('UnreadMessageController', UnreadMessageController);
 
-UnreadMessageController.$inject = ['$scope','FirstLevelFactory', '$route', '$location'];
+UnreadMessageController.$inject = ['$scope', 'MessageFactory'];
 
-function UnreadMessageController($scope, FirstLevelFactory, $route, $location) {
+function UnreadMessageController($scope, MessageFactory) {
 
-    FirstLevelFactory.query({url: 'unreadMessage'}, function(data) {
+    MessageFactory.query({folder: 'unread'}, function(messages) {
         $scope.sortDate = '-date';
-        $scope.MessagesLength = data.length;
-        $scope.messages = data;
+        $scope.MessagesLength = messages.length;
+        $scope.messages = messages;
     });
-
-    $scope.readMessage = function () {
-        var data = {
-            _id: this.message._id
-        };
-
-        FirstLevelFactory.save({url: 'readMessage'}, data, function() {
-            $location.path('/messages/' + data._id);
-            $route.reload();
-        });
-    }
 }

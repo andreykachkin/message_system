@@ -2,12 +2,12 @@ angular
     .module('app')
     .controller('HistoryController', HistoryController);
 
-HistoryController.$inject = ['$scope', '$routeParams', 'SecondLevelFactory'];
+HistoryController.$inject = ['$scope', '$routeParams', 'MessageFactory'];
 
-function HistoryController($scope, $routeParams, SecondLevelFactory) {
+function HistoryController($scope, $routeParams, MessageFactory) {
 
-    SecondLevelFactory.query({firstUrl: 'history', secondUrl: $routeParams.history}, function(data) {
+    MessageFactory.query({folder: 'history', users: $routeParams.users}, function(history) {
         $scope.sortDate = '-date';
-        $scope.history = data;
+        $scope.history = history;
     })
 }

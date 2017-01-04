@@ -1,6 +1,6 @@
 <h1 class="page-header">Написать сообщение</h1>
 <div>
-    <form ng-submit="sendNewMessage()" name="newMessageForm">
+    <form ng-submit="sendMessage()" name="newMessageForm">
         <h4>Выберите получателя</h4>
         <select ui-select2 ng-model="addressee" multiple="multiple" style="width: 100%" lang="ru" required>
             <option ng-repeat="user in users" value="{{user.username}}">{{user.username}}</option>

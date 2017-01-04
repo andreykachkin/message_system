@@ -2,12 +2,12 @@ angular
     .module('app')
     .controller('SentMessageController', SentMessageController);
 
-SentMessageController.$inject = ['$scope', 'FirstLevelFactory'];
+SentMessageController.$inject = ['$scope', 'MessageFactory'];
 
-function SentMessageController($scope, FirstLevelFactory) {
+function SentMessageController($scope, MessageFactory) {
 
-    FirstLevelFactory.query({url: 'sentMessage'}, function(data){
+    MessageFactory.query({folder: 'sent'}, function(messages){
         $scope.sortDate = '-date';
-        $scope.messages = data;
+        $scope.messages = messages;
     });
 }

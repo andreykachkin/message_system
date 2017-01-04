@@ -1,17 +1,17 @@
 angular
-    .module('app', ['ngResource'])
+    .module('app')
     .controller('AuthenticationController', AuthenticationController);
 
-AuthenticationController.$inject = ['$scope','FirstLevelFactory', '$window'];
+AuthenticationController.$inject = ['$scope','AuthenticationFactory', '$window'];
 
-function AuthenticationController($scope, FirstLevelFactory, $window) {
+function AuthenticationController($scope, AuthenticationFactory, $window) {
     $scope.checkAuth = function () {
         var data = {
             username : this.username,
             password : this.password
         };
 
-        FirstLevelFactory.save({url: 'authentication'}, data, function() {
+        AuthenticationFactory.save({}, data, function() {
             $window.location.href = '/mail';
         }, function(){
             $scope.error = true;

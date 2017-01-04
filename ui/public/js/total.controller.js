@@ -2,18 +2,18 @@ angular
     .module('app')
     .controller('TotalController', TotalController);
 
-TotalController.$inject = ['$scope', '$route', '$location', 'FirstLevelFactory'];
+TotalController.$inject = ['$scope', '$route', 'UserFactory', 'MessageFactory'];
 
-function TotalController($scope, $route, $location, FirstLevelFactory) {
+function TotalController($scope, $route, UserFactory, MessageFactory) {
 
-    FirstLevelFactory.query({url: 'users'}, function(data){
+    UserFactory.query(function (users) {
+        $scope.users = users;
         $scope.sortParam = 'username';
-        $scope.users = data;
     });
 
-    FirstLevelFactory.query({url: 'inboxMessage'}, function (data) {
+    MessageFactory.query({folder: 'inbox'}, function (messages) {
         $scope.sortDate = '-date';
-        $scope.messages = data;
+        $scope.messages = messages;
     });
 
     $scope.sendMessage = function (){
@@ -22,20 +22,9 @@ function TotalController($scope, $route, $location, FirstLevelFactory) {
             text : this.text
         };
 
-        FirstLevelFactory.save({url: 'sendMessage'}, data, function() {
+        MessageFactory.save({}, data, function() {
             var modal = angular.element(document.querySelector('.modal.fade.in'));
             modal.modal('hide');
-            $route.reload();
-        });
-    };
-
-    $scope.readMessage = function(){
-        var data = {
-            _id : this.message._id
-        };
-
-        FirstLevelFactory.save({url: 'readMessage'}, data, function() {
-            $location.path('/messages/' + data._id);
             $route.reload();
         });
     };

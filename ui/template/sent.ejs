@@ -12,7 +12,7 @@
         <tbody>
         <tr ng-repeat="message in messages | orderBy : sortDate">
             <td>
-                <a href="/messages/{{message._id}}" class="btn btn-default" >
+                <a href="/{{message._id}}" class="btn btn-default" >
                     <i class="fa fa-envelope-o" title="Прочитать сообщение"></i>
                 </a>
             </td>

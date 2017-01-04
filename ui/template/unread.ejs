@@ -12,11 +12,9 @@
         <tbody>
         <tr ng-repeat="message in messages | orderBy : sortDate">
             <td>
-                <form ng-submit="readMessage()">
-                    <button class="btn btn-default" type="submit">
-                        <i class="fa fa-envelope" title="Прочитать новое сообщение"></i>
-                    </button>
-                </form>
+                <a class="btn btn-default" href="/{{message._id}}">
+                    <i class="fa fa-envelope" title="Прочитать новое сообщение"></i>
+                </a>
             </td>
             <td>{{message.sender}}</td>
             <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">{{message.text}}</td>
