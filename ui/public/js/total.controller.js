@@ -13,8 +13,12 @@ function TotalController($scope, $route, UserFactory, MessageFactory) {
 
     MessageFactory.query({folder: 'inbox'}, function (messages) {
         $scope.sortDate = '-date';
+        $scope.MessagesLength = messages.length;
         $scope.messages = messages;
     });
+
+    $scope.title = 'Входящие';
+    $scope.secondUser = 'Отправитель';
 
     $scope.sendMessage = function (){
         var data = {

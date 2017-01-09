@@ -8,6 +8,10 @@ function SentMessageController($scope, MessageFactory) {
 
     MessageFactory.query({folder: 'sent'}, function(messages){
         $scope.sortDate = '-date';
+        $scope.MessagesLength = messages.length;
         $scope.messages = messages;
     });
+
+    $scope.title = 'Отправленные';
+    $scope.secondUser = 'Адресат';
 }

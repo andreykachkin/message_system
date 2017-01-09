@@ -1,0 +1,31 @@
+<div>
+<h1 class="page-header">{{title}}</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-hover" ng-show="MessagesLength !== 0">
+        <thead>
+        <tr>
+            <th></th>
+            <th>{{secondUser}}</th>
+            <th>Текст сообщения</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="message in messages | orderBy : sortDate">
+            <td>
+                <a class="btn btn-default" href="/{{message._id}}">
+                    <i ng-show="secondUser == 'Адресат'" class="fa fa-envelope-o" title="Прочитать сообщение"></i>
+                    <i ng-show="message.status == 'read' && secondUser == 'Отправитель'" class="fa fa-envelope-open-o" title="Прочитать сообщение"></i>
+                    <i ng-show="message.status == 'unread' && secondUser == 'Отправитель'" class="fa fa-envelope" title="Прочитать новое сообщение"></i>
+                </a>
+            </td>
+            <td ng-show="secondUser == 'Адресат'">{{message.addressee}}</td>
+            <td ng-show="secondUser == 'Отправитель'">{{message.sender}}</td>
+            <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">{{message.text}}</td>
+            <td>{{message.date | date: dd.MM.yyyy}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-center" ng-show="MessagesLength == 0">У вас нет сообщений</p>
+</div>
+</div>

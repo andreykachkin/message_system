@@ -11,4 +11,7 @@ function UnreadMessageController($scope, MessageFactory) {
         $scope.MessagesLength = messages.length;
         $scope.messages = messages;
     });
+
+    $scope.title = 'Непрочитанные';
+    $scope.secondUser = 'Отправитель';
 }
