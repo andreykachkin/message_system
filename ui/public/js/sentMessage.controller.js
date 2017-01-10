@@ -11,7 +11,4 @@ function SentMessageController($scope, MessageFactory) {
         $scope.MessagesLength = messages.length;
         $scope.messages = messages;
     });
-
-    $scope.title = 'Отправленные';
-    $scope.secondUser = 'Адресат';
 }

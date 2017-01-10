@@ -1,1 +1,18 @@
-<message-directive></message-directive>
+<h1 class="page-header">Отправленные</h1>
+<div class="table-responsive">
+    <table class="table table-striped table-hover" ng-show="MessagesLength !== 0">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Адресат</th>
+            <th>Текст сообщения</th>
+            <th>Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="message in messages | orderBy : sortDate" messages-list="sent"></tr>
+        </tbody>
+    </table>
+    <p class="text-center" ng-show="MessagesLength == 0">У вас нет сообщений</p>
+</div>
+

@@ -1,0 +1,10 @@
+<tr>
+    <td>
+        <a class="btn btn-default" href="/{{message._id}}">
+            <i class="fa" title="Прочитать сообщение"></i>
+        </a>
+    </td>
+    <td class="secondUser"></td>
+    <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 300px;">{{message.text}}</td>
+    <td>{{message.date | date: dd.MM.yyyy}}</td>
+</tr>

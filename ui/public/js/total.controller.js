@@ -17,9 +17,6 @@ function TotalController($scope, $route, UserFactory, MessageFactory) {
         $scope.messages = messages;
     });
 
-    $scope.title = 'Входящие';
-    $scope.secondUser = 'Отправитель';
-
     $scope.sendMessage = function (){
         var data = {
             addressee : this.user.username,
